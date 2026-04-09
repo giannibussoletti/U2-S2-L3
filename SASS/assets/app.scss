@@ -5,3 +5,15 @@
 // piccoli file SCSS distribuiti che si occupano delle varie funzionalità
 // (variabili, cicli, mixins ecc.)
 // i singoli file si vanno a creare in una sotto cartella chiamata partials
+
+// tutti i file partials DEVONO avere il nome che comincia con underscore (
+// questo li farà IGNORARE dal compilatore di SASS, che non genererà automaticamente il loro .css e .css.map
+// li creiamo per essere IMPORTATI in una fase successiva in questo file
+// (SENZA _), in modo da compilarli solo una volta sola all'interno di questa struttura.
+
+// Importiamo i partials
+@import "./partials/reset"; // Il file viene importato senza UNDERSCORE ed ESTENSIONE
+@import "./partials/normalize";
+@import "./partials/variabili";
+@import "./partials/loops";
+@import "./partials/mixins.scss" @import "./partials/animation";
