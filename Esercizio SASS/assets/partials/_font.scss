@@ -4,7 +4,7 @@ $font-size-map: (
   sm: 0.8em,
   md: 1.5em,
   lg: 2em,
-  xxl: 6em,
+  xxl: 5em,
 );
 
 @each $key, $value in $font-size-map {
