@@ -1,0 +1,7 @@
+@each $key, $value in $color-button-map {
+  .button-class-#{$key} {
+    background-color: $value;
+    color: $primary;
+    border: none;
+  }
+}

@@ -1,0 +1,25 @@
+$f-family: Arial, Helvetica, sans-serif;
+
+$font-size-map: (
+  sm: 0.8em,
+  md: 1.5em,
+  lg: 2em,
+  xxl: 6em,
+);
+
+@each $key, $value in $font-size-map {
+  .font-size-#{$key} {
+    font-size: #{$value};
+  }
+}
+
+$font-weight-map: (
+  normal: 400,
+  bold: 900,
+);
+
+@each $key, $value in $font-weight-map {
+  .font-weight-#{$key} {
+    font-weight: $value;
+  }
+}

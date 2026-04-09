@@ -1,0 +1,68 @@
+body {
+  font-family: $f-family;
+  width: $w-100;
+}
+
+.hero-section,
+header {
+  background-color: $bg-hero;
+}
+
+.hero-wrapper,
+nav,
+.gallery {
+  max-width: 1500px;
+}
+
+.hero-wrapper,
+.gallery {
+  @include d-flex;
+}
+
+.hero-wrapper {
+  width: $w-100;
+
+  div {
+    width: 100%;
+    img {
+      width: 650px;
+    }
+  }
+}
+
+.gallery {
+  gap: 1em;
+  @include justify-center;
+  div {
+    width: 25%;
+    @include d-flex;
+    @include justify-center;
+    img {
+      width: 100%;
+      border: 0;
+    }
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  ul {
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    li {
+      color: $primary;
+      @include d-flex;
+      @include justify-center;
+    }
+  }
+}
+
+h1 {
+  @include title;
+}
+
+img {
+  @include floating;
+}

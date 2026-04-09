@@ -1,0 +1,20 @@
+$hero-title: #28064f;
+$bg-hero: #640fc5;
+$primary: #f4f4f4;
+
+$color-palette: (
+  primary: #f4f4f4,
+  white: #fff,
+);
+
+$color-button-map: (
+  blue: #0e6cff,
+  orange: #ff8700,
+  green: #4caf50,
+);
+
+@each $key, $value in $color-palette {
+  .c-#{$key} {
+    color: #{$value};
+  }
+}

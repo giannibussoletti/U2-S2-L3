@@ -1,0 +1,99 @@
+$position: (
+  absolute: absolute,
+  relative: relative,
+);
+
+@each $key, $value in $position {
+  .p-#{$key} {
+    position: $value;
+  }
+}
+
+$w-100: 100%;
+
+$border-radius: (
+  sm: 10px,
+  md: 15px,
+  lg: 25px,
+);
+
+@each $key, $value in $border-radius {
+  .bd-radius-#{$key} {
+    border-radius: $value;
+  }
+}
+
+$spacing: (
+  auto: auto,
+  none: 0,
+  sm: 1em,
+  md: 1.5em,
+  lg: 2em,
+  xl: 3em,
+  xxl: 5em,
+);
+
+$display: (
+  inline: inline-block,
+  block: block,
+);
+
+@each $key, $value in $spacing {
+  @each $key1, $value2 in $display {
+    .d-#{$key1}-space-#{$key} {
+      display: $value2;
+      padding: $value;
+    }
+  }
+}
+
+@each $key, $value in $spacing {
+  .m-#{$key} {
+    margin: $value;
+  }
+  .m-x-#{$key} {
+    margin-right: $value;
+    margin-left: $value;
+  }
+  .m-y-#{$key} {
+    margin-bottom: $value;
+    margin-top: $value;
+  }
+  .m-top-#{$key} {
+    margin-top: $value;
+  }
+  .m-bottom-#{$key} {
+    margin-bottom: $value;
+  }
+  .m-end-#{$key} {
+    margin-right: $value;
+  }
+  .m-start-#{$key} {
+    margin-left: $value;
+  }
+}
+@each $key, $value in $spacing {
+  .p-#{$key} {
+    padding: $value;
+  }
+  .p-x-#{$key} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+  .p-y-#{$key} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+  .p-top-#{$key} {
+    padding-top: $value;
+  }
+  .p-bottom-#{$key} {
+    padding-bottom: $value;
+  }
+  .p-end-#{$key} {
+    padding-right: $value;
+  }
+  .p-start-#{$key} {
+    padding-left: $value;
+  }
+}
