@@ -1,14 +1,226 @@
 // Doppio slash - singolo commento
 
-// /**/ Slash+Asterisco - commento multilinea
+// /**/ Slash+Asterisco - commento multilinea <-- questi vengono riportati anche in CSS
+
+// Nel corso degli anni molte funzionalità di SASS sono state portate anche nel CSS base
 
 // SASS è 100% retrocompatibile con css, quindi in questo file possiamo
 // Anche normale CSS
-
+//  1) CSS normale
 body {
   margin: 0;
 }
 
 h1 {
   color: blueviolet;
+}
+
+// 2) SELETTORI ANNIDATI / NIDIFICATI ("nested")
+
+// Invece di scrivere ogni volta i vari settori per anche i children
+// Si possono annidare i figli direttamente nel selettore parent
+
+nav {
+  width: 100%;
+  display: block;
+  ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    li {
+      margin-left: 1em;
+      a {
+        color: black;
+        text-transform: none;
+      }
+    }
+  }
+}
+
+// 3) PSEUDO-CLASSI/PSEUDO-SELETTORI IN SAS
+
+// Versione CSS
+// .btn-primary {
+//   background-color: white;
+//   padding: 0.5em 1em;
+//   border: 1px solid purple;
+//   border-radius: 20px;
+// }
+
+// .btn-primary:hover {
+//   color: white;
+//   background: purple;
+// }
+
+// Versione Sass -
+// In Sass si possono nestare anche le pseudo-classi come :hover o :visited
+.btn-primary {
+  background-color: white;
+  padding: 0.5em 1em;
+  border: 1px solid purple;
+  border-radius: 20px;
+  &:hover {
+    // la & significa "SELETTORE CORRENTE"
+    color: white;
+    background: purple;
+  }
+  &:visited {
+    background-color: white;
+    color: grey;
+  }
+}
+
+// 4) PREFISSI COMUNI PER PROPRIETÀ SIMILI
+// Versione CSS
+// .very-bold {
+//   font-size: 1.5em;
+//   font-weight: bold;
+//   font-style: italic;
+//   font-family: Arial, Helvetica, sans-serif;
+//   border: 1px solid red;
+//   border-radius: 20px;
+// }
+
+// Versione SASS
+
+.very-bold {
+  // Si può usare il singolo prefisso per più regole se hanno tute lo stesso prefisso
+  font: {
+    size: 1.5em;
+    weight: bold;
+    style: italic;
+    family: Arial, Helvetica, sans-serif;
+  }
+  border: {
+    width: 1px;
+    style: solid;
+    color: red;
+  }
+}
+// Qui abbiamo finito le "migliorie" stilistiche per scrivere lo stile CSS
+// cominciamo ora il capitolo "FUNZIONALITÀ"
+
+// 5) VARIABILI IN SASS
+// Una variabile in SASS serve per lo stesso scopo delle variabili
+// nei normali linguaggi di programmazione: memorizza un valore.
+// La principla differenza è che in SASS verranno trattate come COSTANTI
+// Il suo valore non verrà mai cambiato
+
+// Cosa possiamo memorizzare in una var SASS. Quali sono i TIPI DI DATO in SASS?
+// - valori numerici (0, 100, 10px, 1.5rem, 1em, etc.)
+// - stringhe ("0 auto", "2px solid black", etc.)
+// - colori (red, #b9b9b9, rgb, hsl, ect.)
+// - booleani (true, false)
+// - null
+// - LISTE (10px, 16px, 24px) --> simili agli array
+// - MAPPE di coppie chiave:valore --> simili agli oggetti in JS
+
+// Come si dichiara una variabile in SASS?
+// per dichiarare una variabile si usa e nel suo utilizzo si usa sempre il dollaro $
+// La nomenclatura non è in camelCase ma il kebab-case
+// operatore di assegnazione valore è i due punti --> :
+
+$my-color: #f93bf3;
+$special-margin: 1.5em;
+$main-border: 2px solid $my-color; // <-- le variabili sono nestabili
+
+.special-text {
+  color: $my-color; /*Questo colore è stato dichiarato con una variabile in SASS*/
+  margin: $special-margin;
+  border: $main-border;
+}
+
+// 6) MIXIN
+// Un "mixin" in SASS è un blocco di regole/proprietà riutilizzabile a cui si da un nome
+
+@mixin centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin bordered {
+  border: 1px solid black;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  @include bordered; //   border: 1px solid black;
+  @include centered;
+}
+
+// le paratensi, un po' come le funzioni in JS, i MIXIN in SASS possono accettare PARAMETRI
+@mixin custom-border($radius) {
+  // si possono dichiarare più variabili divise dalle virgole ($radius, $border-width)
+  // i parametri nelle parentesi possono avere anche un valore di base per esempio ($radius = 0px)
+  //   per richiamare quel valore negli attributti non va chiamato niente fra le parentesi
+  border: 1px solid black;
+  border-radius: $radius;
+}
+// All'interno della parentesi va dichiarata una variabile che viene definita in ogni nuovo selettore
+
+.border-1 {
+  @include custom-border(20px);
+}
+.border-2 {
+  @include custom-border(10px);
+}
+
+// 7) INTERPOLAZINE DI STRINGE & VALORI
+
+// . . in JS...
+// const a = "size";
+// volete ottenere "font -size "
+// 'font + a // 'font-size'
+// font-${a} // font-size
+
+// in SASS...
+$a: "size";
+$b: "weight";
+
+.text {
+  font-#{$a}: 16px; // font-size: 16px;
+  font-#{$b}: bold; // font-weight: bold;
+}
+
+// 8) CICLI
+// in SASS è possibile utilizzare i CICLI per AUTOMATIZZARE la creazione di stili "in serie".
+
+//  creiamo una LISTA
+$sizes: 12px, 16px, 20px, 24px;
+
+//  andiamo ora a creare 4 classi css, in cui in ognuna ci sarà un font-size
+// diverso con un valore diverso (un po' come i fs-l, fs-2, fs-3 etc. di bootstrap)
+
+//  in JS forEach è un metodo degli array che cicla un array
+// ed espone ad ogni interazione i suoi valore. dal primo all'ultimo
+// In SASS la sintassi è simile ma si utilizza la direttiva @each
+// la prima variabile è quella che andrà a far vedere i singoli elementi nella variabile
+
+@each $misura in $sizes {
+  // $misura al primo giro è 12px, al secondo 16px, al terzo 20px e al quarto 24px
+  .prova-ciclo-#{$misura} // questo andrà a creare una classe con un nome sempre diverso
+  {
+    font-size: $misura;
+  }
+}
+
+// interessante, ma siamo ancora vincolati dal fatto che $size è un valore in pixel, e non è
+// molto adatto ad essere interpolato nel nome della classe
+// potremmo utilizzare invece una MAPPA, molto simile ad un OGGETTO in JS:
+$size-map: (
+  sm: 12px,
+  md: 16px,
+  lg: 20px,
+  xl: 24px,
+);
+
+@each $key, $value in $size-map {
+  // $key è sm, md, lg, xl
+  // $value è 12px, 16px, 20px, 24px
+  // anche in questo caso le prime due variabili sono nomi temporanei dati da noi
+  .ciclo-oggetto-#{$key} {
+    font-size: #{$value};
+  }
 }
